@@ -1,41 +1,28 @@
 // Safety check - make sure we have jQuery loaded in one form or another
 window.jQuery || document.write('<script src="./js/jquery.js"></script>');
 
-
-
 // Defined Constants 
-const HUES = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'monochrome']; 
-const LUMINOSITIES = ['bright', 'light', 'dark']; 
-
 const MIN_COUNT = 1; 
 const INITIAL_COUNT = 3; // Start with a default count of 3
 const MAX_COUNT = 10; 
 
-
-
 // jQuery IDs 
 const QUANTITY_DISPLAY = '#quantity-display'; 
 const COLOR_TILE_CONTAINER = "#color-tile-container"; 
+const SUBMIT_BUTTON_ID = '#submit-button'; 
+const INCREMENT_BUTTON_ID = "#more-button";
+const DECREMENT_BUTTON_ID = "#less-button"; 
 
 // Tracking Variables 
 let count = INITIAL_COUNT; 
 let currentColors = []; 
 let clipboard = null; 
 
-// Function Definitions 
-function getRandomHue() { 
-    console.log("RANDOM HUE"); 
-    let randomIndex = Math.floor(Math.random() * HUES.length);
-    return HUES[randomIndex]; 
+function getColourObj() { 
+    return colourGenerator.makeColourObj(count, document.forms[0]['hue'], document.forms[0]['luminosity']); 
 }
 
-function getRandomLuminosity() {
-    console.log("RANDOM LUM");  
-    let randomIndex = Math.floor(Math.random() * LUMINOSITIES.length); 
-    return LUMINOSITIES[randomIndex]; 
-}
-
-function updateCounterDisplay() { 
+const updateCounterDisplay = () => { 
     $(QUANTITY_DISPLAY).text(count); 
 }
 
@@ -49,32 +36,12 @@ function decrementCounter() {
     updateCounterDisplay(); 
 }
 
-function getColourGeneratorObject() { 
-    let result = {}; 
-
-    result['count'] = count; // Coun't isn't technically part of the form
-    $.each($('form').serializeArray(), function(index, value) {
-        result[value.name] = value.value; 
-    });  
-
-    // Apply randomness 
-    if (result['hue'] === "random") { 
-        result['hue'] = getRandomHue(); 
-    }
-
-    if (result['luminosity'] === "random") { 
-        result['luminosity'] = getRandomLuminosity(); 
-    }
-
-    return result; 
-}
-
 function applyColourGeneration(colorDefinitions) { 
     currentColors = randomColor(colorDefinitions); 
 
     $(COLOR_TILE_CONTAINER).empty(); 
 
-    $.each(currentColors, function(index, value) {
+    $.each(currentColors, (index, value) => {
         // If the value is unspecified, then we don't want to interfere
         if (value === "unspecified") { 
             return; 
@@ -96,19 +63,16 @@ function applyColourGeneration(colorDefinitions) {
     clipboard = new ClipboardJS('.color-tile'); 
 }
 
-function init() { 
-    applyColourGeneration(getColourGeneratorObject()); 
-}
+// Initialization
+(function init() { 
+    applyColourGeneration(getColourObj()); 
+})(); 
 
 // Interactivity 
-init(); 
-
-$('#submit-button').click(function(event) {
+$(SUBMIT_BUTTON_ID).click((event) => {
     event.preventDefault(); 
-
-    let colourDef = getColourGeneratorObject(); 
-    applyColourGeneration(colourDef); 
+    applyColourGeneration(getColourObj()); 
 }); 
 
-$("#more-button").click(incrementCounter); 
-$("#less-button").click(decrementCounter); 
+$(INCREMENT_BUTTON_ID).click(incrementCounter); 
+$(DECREMENT_BUTTON_ID).click(decrementCounter); 
