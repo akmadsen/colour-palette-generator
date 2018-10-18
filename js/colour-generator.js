@@ -6,20 +6,31 @@ let colourGenerator = {
     // Methods
     getRandomIndex: (max) => Math.floor(Math.random() * max), 
     
-    getRandomHue: () => hues[getRandomIndex(hues.length)],
+    getRandomHue: function() {
+        return this.hues[getRandomIndex(this.hues.length)];
+    },
     
-    getRandomLuminosity: () => luminosities[getRandomIndex(luminosities.length)],
+    getRandomLuminosity: function() {
+        return luminosities[getRandomIndex(luminosities.length)]; 
+    },
     
-    makeColourObj: (count, hue, luminosity) => { 
-        // Randomize if applicable 
-        hue = hue === 'random' ? getRandomHue() : hue; 
-        luminosity = luminosity === 'random' ? getRandomLuminosity() : luminosity; 
+    makeColourObj: function(count, hue, luminosity) { 
+        // Randomize if applicable
 
-        // Object Shorthand
-        return { 
-            count, 
-            hue, 
-            luminosity
-        }; 
+        console.log("COUNT: " + count); 
+        console.log("HUE: " + hue); 
+        console.log("LUM: " + luminosity); 
+
+        let obj = {'count': count}; 
+
+        if (hue !== "unspecified") {
+            obj['hue'] = hue === 'random' ? this.getRandomHue() : hue; 
+        }
+
+        if (luminosity !== "unspecified") {
+            obj['luminosity'] = luminosity === 'random' ? this.getRandomLuminosity() : luminosity; 
+        }
+
+        return obj; 
     }
 }
