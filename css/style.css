@@ -60,10 +60,6 @@ legend {
     align-items: center;
 }
 
-fieldset { 
-    border: 1px solid #00000022;
-}
-
 #quantity-display { 
     margin: 0 20px; 
 }
