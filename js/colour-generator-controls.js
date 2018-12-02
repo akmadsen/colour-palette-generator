@@ -16,8 +16,10 @@ let clipboard = null;
 
 const getColourObj = () => {
     return colourGenerator.makeColourObj(
-        count, document.forms[0]['hue'].value, 
-        document.forms[0]['luminosity'].value);
+        count, 
+        document.forms[0]['hue'].value, 
+        document.forms[0]['luminosity'].value
+    );
 }
 
 const updateCounterDisplay = () => {
