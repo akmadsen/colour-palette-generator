@@ -1,18 +1,20 @@
-let colourGenerator = { 
+let colourGenerator = (function () { 
     // Attributes 
-    hues: ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'monochrome'], 
-    luminosities: ['bright', 'light', 'dark'], 
+    let hues = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'monochrome']; 
+    let luminosities = ['bright', 'light', 'dark']; 
     
     // Methods
-    getRandomIndex: (max) => Math.floor(Math.random() * max), 
+    let getRandomIndex = function (max) {
+        Math.floor(Math.random() * max);
+    }
     
-    getRandomHue: function() {
+    let getRandomHue = function() {
         return this.hues[getRandomIndex(this.hues.length)];
-    },
+    }
     
-    getRandomLuminosity: () => luminosities[getRandomIndex(luminosities.length)],
+    let getRandomLuminosity = () => luminosities[getRandomIndex(luminosities.length)];
     
-    makeColourObj: function(count, hue, luminosity) { 
+    let makeColourObj = function(count, hue, luminosity) { 
         // Randomize if applicable
 
         console.log("COUNT: " + count); 
@@ -31,4 +33,12 @@ let colourGenerator = {
 
         return obj; 
     }
-}
+
+    return {
+        hues: hues, 
+        luminosities: luminosities, 
+        getRandomLuminosity: getRandomLuminosity, 
+        getRandomHue: getRandomHue, 
+        makeColourObj: makeColourObj, 
+    }
+})(); 
