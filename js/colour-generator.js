@@ -1,34 +1,34 @@
-let colourGenerator = { 
+let colourGenerator = (function () { 
     // Attributes 
-    hues: ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'monochrome'], 
-    luminosities: ['bright', 'light', 'dark'], 
+    const hues = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'monochrome']; 
+    const luminosities = ['bright', 'light', 'dark']; 
     
     // Methods
-    getRandomIndex: (max) => Math.floor(Math.random() * max), 
-    
-    getRandomHue: function() {
-        return this.hues[getRandomIndex(this.hues.length)];
-    },
-    
-    getRandomLuminosity: () => luminosities[getRandomIndex(luminosities.length)],
-    
-    makeColourObj: function(count, hue, luminosity) { 
-        // Randomize if applicable
+    const getRandomItem = (arr) => arr[getRandomIndex(arr.length)]; 
 
-        console.log("COUNT: " + count); 
-        console.log("HUE: " + hue); 
-        console.log("LUM: " + luminosity); 
-
+    const getRandomIndex = (max) => Math.floor(Math.random() * max);
+    
+    const getRandomHue = () => getRandomItem(hues);
+    
+    const getRandomLuminosity = () => getRandomItem(luminosities); 
+    
+    const makeColourObj = (count, hue, luminosity) => { 
         let obj = {'count': count}; 
 
         if (hue !== "unspecified") {
-            obj['hue'] = hue === 'random' ? this.getRandomHue() : hue; 
+            obj['hue'] = hue === 'random' ? getRandomHue() : hue; 
         }
 
         if (luminosity !== "unspecified") {
-            obj['luminosity'] = luminosity === 'random' ? this.getRandomLuminosity() : luminosity; 
+            obj['luminosity'] = luminosity === 'random' ? getRandomLuminosity() : luminosity; 
         }
 
         return obj; 
     }
-}
+
+    return {
+        getRandomLuminosity: getRandomLuminosity, 
+        getRandomHue: getRandomHue, 
+        makeColourObj: makeColourObj, 
+    }
+})(); 
