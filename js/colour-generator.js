@@ -4,41 +4,29 @@ let colourGenerator = (function () {
     const luminosities = ['bright', 'light', 'dark']; 
     
     // Methods
-    const getRandomIndex = function (max) {
-        return Math.floor(Math.random() * max);
-    }
-    
-    const getRandomHue = function() {
-        return hues[getRandomIndex(hues.length)];
-    }
-    
-    const getRandomLuminosity = function() {
-        return luminosities[getRandomIndex(luminosities.length)];
-    } 
-    
-    const makeColourObj = function(count, hue, luminosity) { 
-        // Randomize if applicable
+    const getRandomItem = (arr) => arr[getRandomIndex(arr.length)]; 
 
-        console.log("COUNT: " + count); 
-        console.log("HUE: " + hue); 
-        console.log("LUM: " + luminosity); 
-
+    const getRandomIndex = (max) => Math.floor(Math.random() * max);
+    
+    const getRandomHue = () => getRandomItem(hues);
+    
+    const getRandomLuminosity = () => getRandomItem(luminosities); 
+    
+    const makeColourObj = (count, hue, luminosity) => { 
         let obj = {'count': count}; 
 
         if (hue !== "unspecified") {
-            obj['hue'] = hue === 'random' ? this.getRandomHue() : hue; 
+            obj['hue'] = hue === 'random' ? getRandomHue() : hue; 
         }
 
         if (luminosity !== "unspecified") {
-            obj['luminosity'] = luminosity === 'random' ? this.getRandomLuminosity() : luminosity; 
+            obj['luminosity'] = luminosity === 'random' ? getRandomLuminosity() : luminosity; 
         }
 
         return obj; 
     }
 
     return {
-        hues: hues, 
-        luminosities: luminosities, 
         getRandomLuminosity: getRandomLuminosity, 
         getRandomHue: getRandomHue, 
         makeColourObj: makeColourObj, 
