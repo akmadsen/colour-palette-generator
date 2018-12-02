@@ -14,8 +14,10 @@ let count = INITIAL_COUNT;
 let colours = [];
 let clipboard = null;
 
-function getColourObj() {
-    return colourGenerator.makeColourObj(count, document.forms[0]['hue'].value, document.forms[0]['luminosity'].value);
+const getColourObj = () => {
+    return colourGenerator.makeColourObj(
+        count, document.forms[0]['hue'].value, 
+        document.forms[0]['luminosity'].value);
 }
 
 const updateCounterDisplay = () => {
@@ -23,12 +25,16 @@ const updateCounterDisplay = () => {
 }
 
 function incrementCounter() {
-    count = (count + 1) > MAX_COUNT ? MAX_COUNT : count + 1;
+    count = (count + 1) > MAX_COUNT ?
+        MAX_COUNT : 
+        count + 1;
     updateCounterDisplay();
 }
 
 function decrementCounter() {
-    count = (count - 1) < MIN_COUNT ? MIN_COUNT : count - 1;
+    count = (count - 1) < MIN_COUNT ? 
+        MIN_COUNT : 
+        count - 1;
     updateCounterDisplay();
 }
 

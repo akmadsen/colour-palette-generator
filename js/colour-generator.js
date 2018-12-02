@@ -10,9 +10,7 @@ let colourGenerator = {
         return this.hues[getRandomIndex(this.hues.length)];
     },
     
-    getRandomLuminosity: function() {
-        return luminosities[getRandomIndex(luminosities.length)]; 
-    },
+    getRandomLuminosity: () => luminosities[getRandomIndex(luminosities.length)],
     
     makeColourObj: function(count, hue, luminosity) { 
         // Randomize if applicable
